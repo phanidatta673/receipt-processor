@@ -66,7 +66,12 @@ async def process_receipt(receipt: Receipt):
         logger.info(f"Generated receipt ID: {receipt_id}")
         
         # Storing of receipt with id into the receipt store
-        receipt_store.add_receipt(receipt_id, receipt_dict)
+        actual_receipt_id = receipt_store.add_receipt(receipt_id, receipt_dict)
+
+        if actual_receipt_id!=receipt_id:
+            logger.info(f"Duplicate receipt detected, returning existing ID: {actual_receipt_id}")
+            return {"id": actual_receipt_id}
+        
         logger.debug(f"Receipt stored with ID: {receipt_id}")
         
         # Calculate the cached points
