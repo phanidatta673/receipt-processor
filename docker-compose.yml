@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+    volumes:
+      - ./app:/app/app
+      - ./app.log:/app/app/log
+    
+  mongodb:
+    image: mongo:5.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_DATABASE=receipt_processor
+    healthcheck:
+      test: ["CMD-SHELL", "echo 'db.runCommand({ping: 1}).ok' | mongo localhost:27017/receipt_processor --quiet"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  mongodb_data:

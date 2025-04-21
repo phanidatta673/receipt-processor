@@ -1,0 +1,32 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+venv/
+.env/
+.venv/
+
+# Logs
+*.log
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+
+# Python egg files
+*.egg
+*.egg-info/
+dist/
+build/
+
+# pytest cache
+.pytest_cache/
+.cache/
+
+# VSCode settings
+.vscode/
+
+# Docker
+*.pid
